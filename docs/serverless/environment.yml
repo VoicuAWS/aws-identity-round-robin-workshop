@@ -142,7 +142,7 @@ Resources:
           - [!Ref ResourcePrefix, 'content']
       Description: Copies objects from a source S3 bucket to a destination S3 bucket.
       Handler: index.handler
-      Runtime: python2.7
+      Runtime: python3.6
       Role: !GetAtt WebsiteContentLambdaRole.Arn
       Timeout: 120
       Code:
@@ -184,7 +184,7 @@ Resources:
                 for key in {x['Key'] for page in page_iterator for x in page['Contents']}:
                   dest_key = os.path.join(prefix, os.path.relpath(key, source_prefix))
                   if not key.endswith('/'):
-                    print 'copy {} to {}'.format(key, dest_key)
+                    print('copy {} to {}'.format(key, dest_key))
                     s3.copy_object(CopySource={'Bucket': source_bucket, 'Key': key}, Bucket=bucket, Key = dest_key, ACL='public-read')
 
                 result = cfnresponse.SUCCESS
@@ -354,7 +354,7 @@ Resources:
           - [!Ref ResourcePrefix, 'content-update']
       Description: Updates object on S3 for client-side configuration
       Handler: index.handler
-      Runtime: python2.7
+      Runtime: python3.6
       Role: !GetAtt WebsiteContentUpdateLambdaRole.Arn
       Timeout: 120
       Code:
