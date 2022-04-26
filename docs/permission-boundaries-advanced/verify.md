@@ -114,7 +114,7 @@ aws iam attach-role-policy --policy-arn arn:aws:iam::<ACCOUNT_ID_FROM_OTHER_TEAM
 		
 ## Task 3 <small>Create and test a Lambda function</small>
 
-Finally, you will create a **Node.js 8.10** Lambda function using the sample code below and pass the IAM role you just created:
+Finally, you will create a **Node.js** Lambda function using the sample code below and pass the IAM role you just created:
  
 * Create a file named **`index.js`** using the code below. Replace `"SHARED_LOGGING_BUCKET_NAME"` with the name of bucket that begins with `"shared-logging-"` and ends in `"-data"`. Also replace `"PREFIX_FROM_PERMISSIONS_BOUNDARY"` with the prefix the permissions boundary requires for that bucket.  In order to find the bucket name, just run `aws s3 ls --profile webadmins`. In order to find the prefix, examine the permissions boundary policy from the **BUILD** phase. 
 
@@ -152,15 +152,15 @@ zip lambdafunction.zip index.js
 ```
 * Create a Lambda function
 ```
-aws lambda create-function --function-name verifyfunction --runtime nodejs10.x --role arn:aws:iam::<ACCOUNT_ID_FROM_OTHER_TEAM>:role/webadmins/NAME_OF_ROLE --handler index.handler --region us-east-1 --zip-file fileb://lambdafunction.zip --profile webadmins
+aws lambda create-function --function-name verifyfunction --runtime nodejs14.x --role arn:aws:iam::<ACCOUNT_ID_FROM_OTHER_TEAM>:role/webadmins/NAME_OF_ROLE --handler index.handler --region us-east-1 --zip-file fileb://lambdafunction.zip --profile webadmins
 ```
 * Invoke the Lambda function
 ```
 aws lambda invoke --function-name verifyfunction --region us-east-1 --invocation-type RequestResponse outputfile.txt --profile webadmins
 ```
-* Examine the output file. 
+* Examine the outputfile.txt. 
 
-If you see files marked that **webadmins/you-should-SEE-this-file--webadmins...** then you have successfully verified that the webadmins can do their job. Also make sure the function is generating logs in CloudWatch logs.
+If you see a LOCAL file marked that **webadmins/you-should-SEE-this-file--webadmins...** then you have successfully verified that the webadmins can do their job. Also make sure the function is generating logs in CloudWatch logs.
 
 * *(Optional)* Test Lambda for alternate bucket prefix
 
