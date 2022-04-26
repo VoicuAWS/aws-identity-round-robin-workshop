@@ -184,7 +184,7 @@ aws iam delete-policy --policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/webadmins/NA
 ```
 * Delete role created in **VERIFY** phase:
 ```
-aws iam delete-role --role-name verifyrole
+aws iam delete-role --role-name NAME_OF_VERIFY_ROLE
 ```
 * Delete the Lambda function created in **VERIFY** phase:
 ```
