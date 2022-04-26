@@ -158,9 +158,9 @@ aws lambda create-function --function-name verifyfunction --runtime nodejs14.x -
 ```
 aws lambda invoke --function-name verifyfunction --region us-east-1 --invocation-type RequestResponse outputfile.txt --profile webadmins
 ```
-* Examine the outputfile.txt. 
+* Examine the outputfile.txt locally on your laptop. 
 
-If you see a LOCAL file marked that **webadmins/you-should-SEE-this-file--webadmins...** then you have successfully verified that the webadmins can do their job. Also make sure the function is generating logs in CloudWatch logs.
+If you see a file marked that **webadmins/you-should-SEE-this-file--webadmins...** then you have successfully verified that the webadmins can do their job. Also make sure the function is generating logs in CloudWatch logs.
 
 * *(Optional)* Test Lambda for alternate bucket prefix
 
