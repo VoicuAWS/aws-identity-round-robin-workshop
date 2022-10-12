@@ -55,9 +55,8 @@ Close the browser tab containing the Macie console.
 1. You will also need GuardDuty for this lab so you will now enable GuardDuty.
 
 2. Return to the AWS Console, signing into the account again if necessary. Select **GuardDuty** from the main console.  
-3. If you see a **Get Started** button, click it.
-
-4. If the region is not set to Northern Virginia, select Northern Virginia (or N. Virginia) for the region.
+3. If the region is not set to Northern Virginia, select Northern Virginia (or N. Virginia) for the region.
+4. If you see a **Get Started** button, click it. If you do not see the button and have the **GuardDuty** findings screen instead, it means **GuardDuty** is already enabled. You can skip to the next section.
 
 5. Click **Enable GuardDuty**.
 
@@ -116,7 +115,7 @@ The policy definition will be similar to the image below.
 
     ![SecAdministratorRolePolicy](./images/IamEssSecAdminPolicy.png)
 
-    You may need to click **Show more** to see all of the policies.  There are six managed policies attached to this role, five of them are provided by AWS for GuardDuty, Inspector, CloudTrail, IAM, and SNS.  While you will not be working directly with SNS and IAM, the policies for SNS and IAM are included because including them provides for a better console experience.  There is a sixth managed policy that was created for Amazon Macie to illustrate how custom managed policies can be developed. Edit this policy so it says `macie2:*`. Click on each of the managed policies to see the underlying privileges of each.  Note that there are some services, such as Amazon EFS (Elastic File System), that are not granted by any of these policies.  You will confirm this lack of access later in this workshop.
+    You may need to click **Show more** to see all of the policies.  There are five managed policies attached to this role, four of them are provided by AWS for GuardDuty, Inspector, CloudTrail, and SNS.  While you will not be working directly with SNS, the policies for SNS are included because including them provides for a better console experience.  There is a fifth managed policy that was created for Amazon Macie to illustrate how custom managed policies can be developed. Click on each of the managed policies to see the underlying privileges of each.  Note that there are some services, such as Amazon EFS (Elastic File System), that are not granted by any of these policies.  You will confirm this lack of access later in this workshop.
 
 2. From the main page of the role, click the **Trust relationships** tab.  You will see a section on the page telling you that the trusted entity (the entity that can assume the role) is the 12-digit AWS account ID as shown below.  This means that any principal in the account can assume the role.
 
@@ -159,11 +158,11 @@ You can also select a color that will be used to display the role you assume in 
 
     This means that your *effective* privileges have been *temporarily* replaced with those of the SecAdministrator role.
 
-3.  Go to the Amazon EFS console.  Notice that you get a message telling you that you do not have access to any of the features of the console.  This is because none of the underlying policies grant any access to any part of Amazon EFS.
+3.  Go to the Amazon EFS console, click **File Systems** menu option.  Notice that you get a message telling you that you do not have access to any of the features of the console.  This is because none of the underlying policies grant any access to any part of Amazon EFS.
 
     ![EFSConsole](./images/IamEssEFSConsole.png)
 
-4. Now go to the Amazon Inspector Console.  To verify that you have administrative capabilities for Inspector, you are going to clone an existing template.  Click **Assessment Templates** and check the box to the left of the template name that begins with *LampInspectorAssessmentTemplate* and click **Clone**.  A section of the form will appear.  Scroll down towards the bottom and click the **Create** button.   Refresh the screen.  You should now see two templates that begin with *LampInspectorAssessment*.  If you widen the Name column you will see that the newly created template contains the string "Cloned."  You have just successfully cloned an assessment template which shows that you have administrative access privileges for Inspector.
+4. Now go to the Amazon Inspector Console. Click **Options/Menu** in top left side and select **Switch to inspector classic**. To verify that you have administrative capabilities for Inspector, you are going to clone an existing template.  Click **Assessment Templates** and check the box to the left of the template name that begins with *LampInspectorAssessmentTemplate* and click **Clone**.  A section of the form will appear.  Scroll down towards the bottom and click the **Create** button.   Refresh the screen.  You should now see two templates that begin with *LampInspectorAssessment*.  If you widen the Name column you will see that the newly created template contains the string "Cloned."  You have just successfully cloned an assessment template which shows that you have administrative access privileges for Inspector.
 
 5. Now go to the GuardDuty console and select the Settings menu item.  To verify that you do have administrative capabilities for GuardDuty, scroll down to the field named *Findings export options* and change the *Frequency for updated findings* value to **Update CWE and S3 every 1 hour** and click **Save**.
 You will see a message at the top of your window (you may need to scroll up) saying that the settings have been saved. This shows you do have full access to *GuardDuty*.
@@ -193,11 +192,11 @@ The role will have permissions similar to those shown in the picture below.
 
     ![SecOperPolicy](./images/IamEssSecOperPolicy.png)
 
-2. Notice that there are once again managed policies, five AWS-managed policies for Inspector, GuardDuty, CloudTrail, IAM, and SNS, and a custom managed policy for Macie.
+2. Notice that there are once again managed policies, four AWS-managed policies for Inspector, GuardDuty, CloudTrail, and SNS, and a custom managed policy for Macie.
 The managed policies for Inspector, GuardDuty, and CloudTrail still provide full access to the services.
-The Macie policy (whose name contains *SecOperatorMaciePolicy*), despite its name, still provides full access to Macie. There are also SNS and IAM policies to provide for a better console experience.
+The Macie policy (whose name contains *SecOperatorMaciePolicy*), despite its name, still provides full access to Macie. There are also SNS policies to provide for a better console experience.
 
-3.  Remove the AmazonCloudTrailFullAccess, AmazonGuardDutyFullAccess, and Amazon InspectorFullAccess policies by clicking on the removal crosses as shown by the arrows.
+3.  Remove the AmazonCloudTrailFullAccess, AmazonGuardDutyFullAccess, and Amazon InspectorFullAccess policies.
 Add read-only access policies for Inspector, CloudTrail, and GuardDuty. You will also need list access for Inspector, Guard Duty and Macie so that the AWS console can display the service pages correctly. Remember to modify the Macie policy for read and list only.
 
     If you need some hints, open the dropdown below.
